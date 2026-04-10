@@ -1,0 +1,854 @@
+@prefix mg: <http://thekgguys.bootcamp.ai/genres#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix wd: <http://www.wikidata.org/wiki/> .
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+
+# --- Local namespaces ---
+@prefix mg: <http://thekgguys.bootcamp.ai/genres#> .
+@prefix mka: <http://musicKGartists.com/ontology/artists#> .
+@prefix mkr: <http://musicKGartists.com/resource/> .
+@prefix inst: <http://www.instrumental.org/2026/03/en/instruments_group#> .
+@prefix kga: <http://www.kga.org/us-cohort-two#> .
+
+# --- ABox instance namespace ---
+@prefix sng: <http://thekgguys.bootcamp.ai/songs#> .
+
+# --- Legacy local namespaces ---
+@prefix geo: <http://thekgguys.bootcamp.ai/geo-location#> .
+
+# ========================================================================================
+# Ontology Declaration
+# ========================================================================================
+
+<http://thekgguys.bootcamp.ai/genres#>
+    a owl:Ontology ;
+    rdfs:label "Music Genre Domain Ontology" ;
+    rdfs:comment "An ontology modeling music genres, songs, artists, instruments, venues, and cultural events using a hybrid SKOS + RDFS/OWL approach." ;
+    owl:versionInfo "1.0.0" ;
+    dcterms:creator "The KG Guys" ;
+    dcterms:created "2026-03-01"^^xsd:date ;
+    dcterms:modified "2026-04-10"^^xsd:date .
+
+# ========================================================================================
+# TBox: Domain Class Definitions
+# ========================================================================================
+
+mg:MusicGenres a owl:Class ;
+    rdfs:label "Music Genre" ;
+    rdfs:comment "A category of music characterized by shared conventions, styles, or cultural associations. Root class for all genre subclasses." .
+
+# --- Creative Works ---
+
+mg:Songs a owl:Class ;
+    rdfs:subClassOf schema:MusicComposition ;
+    rdfs:label "Song" ;
+    rdfs:comment "A musical composition. Aligned to schema:MusicComposition (Thing > CreativeWork > MusicComposition)." .
+
+mg:Tracks a owl:Class ;
+    rdfs:subClassOf schema:MusicRecording ;
+    rdfs:label "Track" ;
+    rdfs:comment "A specific recording of a song. Aligned to schema:MusicRecording (Thing > CreativeWork > MusicRecording)." .
+
+mg:Lyrics a owl:Class ;
+    rdfs:subClassOf schema:CreativeWork ;
+    rdfs:label "Lyrics" ;
+    rdfs:comment "The text/words of a song. Aligned to schema:CreativeWork." .
+
+mg:Playlists a owl:Class ;
+    rdfs:subClassOf schema:MusicPlaylist ;
+    rdfs:label "Playlist" ;
+    rdfs:comment "An ordered collection of tracks. Aligned to schema:MusicPlaylist (Thing > CreativeWork > MusicPlaylist)." .
+
+mg:Albums a owl:Class ;
+    rdfs:subClassOf schema:MusicAlbum ;
+    rdfs:label "Album" ;
+    rdfs:comment "A collection of recordings released together. Aligned to schema:MusicAlbum (Thing > CreativeWork > MusicPlaylist > MusicAlbum)." .
+
+# --- Streaming / Platform ---
+
+mg:StreamingPlatforms a owl:Class ;
+    rdfs:subClassOf schema:WebApplication ;
+    rdfs:label "Streaming Platform" ;
+    rdfs:comment "A digital music streaming service. Aligned to schema:WebApplication (Thing > CreativeWork > SoftwareApplication > WebApplication)." .
+
+# --- External classes (defined in other namespaces) ---
+# mka:Artist, mka:MusicGroup, mka:Producer
+# geo:Region, geo:Country, geo:City, geo:MusicVenue
+# inst:Instrument
+
+# ========================================================================================
+# TBox: Genre Class Hierarchy (rdfs:subClassOf)
+# ========================================================================================
+# Genre concepts are dual-typed as owl:Class (so songs can be rdf:type instances)
+# and connected via rdfs:subClassOf for the class hierarchy.
+
+mg:popular-music a owl:Class ;
+    rdfs:subClassOf mg:MusicGenres .
+
+mg:reggaeton a owl:Class ;
+    rdfs:subClassOf mg:popular-music .
+
+mg:neoperreo a owl:Class ;
+    rdfs:subClassOf mg:reggaeton .
+
+mg:trap a owl:Class ;
+    rdfs:subClassOf mg:reggaeton .
+
+mg:urban a owl:Class ;
+    rdfs:subClassOf mg:reggaeton .
+
+mg:rock-music a owl:Class ;
+    rdfs:subClassOf mg:popular-music .
+
+mg:rock-and-roll a owl:Class ;
+    rdfs:subClassOf mg:rock-music .
+
+mg:classic-rock a owl:Class ;
+    rdfs:subClassOf mg:rock-music .
+
+mg:hard-rock a owl:Class ;
+    rdfs:subClassOf mg:rock-music .
+
+mg:pop-rock a owl:Class ;
+    rdfs:subClassOf mg:rock-music .
+
+mg:punk-rock a owl:Class ;
+    rdfs:subClassOf mg:rock-music .
+
+mg:alt-rock a owl:Class ;
+    rdfs:subClassOf mg:rock-music .
+
+mg:pop-music a owl:Class ;
+    rdfs:subClassOf mg:popular-music .
+
+mg:latin-pop a owl:Class ;
+    rdfs:subClassOf mg:pop-music .
+
+mg:baroque-pop a owl:Class ;
+    rdfs:subClassOf mg:pop-music .
+
+mg:r-and-b a owl:Class ;
+    rdfs:subClassOf mg:popular-music .
+
+mg:k-pop a owl:Class ;
+    rdfs:subClassOf mg:popular-music .
+
+# ========================================================================================
+# TBox: Object Properties
+# ========================================================================================
+
+# --- Top-level ---
+
+mg:hasMusicRelation a owl:ObjectProperty ;
+    rdfs:label "has music relation" ;
+    rdfs:comment "Top-level property for any relationship in the music domain." .
+
+# --- Genre relationships ---
+
+mg:hasGenre a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "has genre" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mg:MusicGenres ;
+    rdfs:comment "Links a song to its genre." .
+
+mg:hasRelatedGenre a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    a owl:SymmetricProperty ;
+    rdfs:label "has related genre" ;
+    rdfs:domain mg:MusicGenres ;
+    rdfs:range mg:MusicGenres ;
+    rdfs:comment "Links two genres that are similar or related." .
+
+mg:influencedBy a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "influenced by" ;
+    rdfs:domain mg:MusicGenres ;
+    rdfs:range mg:MusicGenres ;
+    rdfs:comment "Links a genre to another genre that influenced it." .
+
+mg:hasInfluenced a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    owl:inverseOf mg:influencedBy ;
+    rdfs:label "has influenced" ;
+    rdfs:domain mg:MusicGenres ;
+    rdfs:range mg:MusicGenres ;
+    rdfs:comment "Inverse of influencedBy." .
+
+# --- Song / Track / Album / Playlist ---
+
+mg:hasTrack a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "has track" ;
+    rdfs:domain mg:Albums ;
+    rdfs:range mg:Tracks ;
+    rdfs:comment "Links an album to a track on it." .
+
+mg:isTrackOn a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    owl:inverseOf mg:hasTrack ;
+    rdfs:label "is track on" ;
+    rdfs:domain mg:Tracks ;
+    rdfs:range mg:Albums ;
+    rdfs:comment "Inverse of hasTrack." .
+
+mg:isRecordingOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "is recording of" ;
+    rdfs:domain mg:Tracks ;
+    rdfs:range mg:Songs ;
+    rdfs:comment "Links a track (recording) to the song it captures." .
+
+mg:hasRecording a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    owl:inverseOf mg:isRecordingOf ;
+    rdfs:label "has recording" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mg:Tracks ;
+    rdfs:comment "Inverse of isRecordingOf." .
+
+mg:hasLyrics a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "has lyrics" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mg:Lyrics ;
+    rdfs:comment "Links a song to its lyrics." .
+
+mg:hasCoverOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "has cover of" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mg:Songs ;
+    rdfs:comment "Links a cover song to the original song it covers." .
+
+mg:isCoveredBy a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    owl:inverseOf mg:hasCoverOf ;
+    rdfs:label "is covered by" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mg:Songs ;
+    rdfs:comment "Inverse of hasCoverOf." .
+
+mg:hasRemix a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "has remix" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mg:Songs .
+
+mg:isRemixOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    owl:inverseOf mg:hasRemix ;
+    rdfs:label "is remix of" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mg:Songs .
+
+mg:hasSampleOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "has sample of" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mg:Songs .
+
+mg:isSampledBy a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    owl:inverseOf mg:hasSampleOf ;
+    rdfs:label "is sampled by" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mg:Songs .
+
+# --- People / Artist ---
+
+mg:hasPersonRelation a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "has person relation" ;
+    rdfs:comment "Property for any relationship involving people." .
+
+mg:hasArtist a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPersonRelation ;
+    rdfs:label "has artist" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mka:Artist ;
+    rdfs:comment "Links a song to its performing artist." .
+
+mg:isArtistOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPersonRelation ;
+    owl:inverseOf mg:hasArtist ;
+    rdfs:label "is artist of" ;
+    rdfs:domain mka:Artist ;
+    rdfs:comment "Inverse of hasArtist." .
+
+mg:hasProducer a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPersonRelation ;
+    rdfs:label "has producer" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mka:Producer ;
+    rdfs:comment "Links a song to its producer." .
+
+mg:isProducerOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPersonRelation ;
+    owl:inverseOf mg:hasProducer ;
+    rdfs:label "is producer of" ;
+    rdfs:domain mka:Producer .
+
+mg:hasMember a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPersonRelation ;
+    rdfs:label "has member" ;
+    rdfs:domain mka:MusicGroup ;
+    rdfs:range mka:Artist ;
+    rdfs:comment "Links a music group to its members." .
+
+mg:isMemberOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPersonRelation ;
+    owl:inverseOf mg:hasMember ;
+    rdfs:label "is member of" ;
+    rdfs:domain mka:Artist ;
+    rdfs:range mka:MusicGroup .
+
+# --- Geography / Place ---
+
+mg:hasPlaceRelation a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "has place relation" ;
+    rdfs:comment "Property for any relationship involving places." .
+
+mg:isPopularIn a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPlaceRelation ;
+    rdfs:label "is popular in" ;
+    rdfs:domain mg:MusicGenres ;
+    rdfs:comment "Links a genre to a region/country/city where it is popular." .
+
+mg:hasOrigin a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPlaceRelation ;
+    rdfs:label "has origin" ;
+    rdfs:domain mg:MusicGenres ;
+    rdfs:comment "Links a genre to its place of origin." .
+
+mg:hasVenue a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPlaceRelation ;
+    rdfs:label "has venue" ;
+    rdfs:range geo:MusicVenue ;
+    rdfs:comment "Links a genre or event to a music venue." .
+
+mg:isLocatedIn a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPlaceRelation ;
+    rdfs:label "is located in" ;
+    rdfs:comment "Links a venue or city to its containing place (city, country, region)." .
+
+mg:isPartOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasPlaceRelation ;
+    rdfs:label "is part of" ;
+    rdfs:comment "Links a city to its country, or a country to its region." .
+
+# --- Instrument ---
+
+mg:hasInstrumentRelation a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "has instrument relation" .
+
+mg:usesInstrument a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasInstrumentRelation ;
+    rdfs:label "uses instrument" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range inst:Instrument ;
+    rdfs:comment "Links a song to an instrument used in it." .
+
+mg:isUsedIn a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasInstrumentRelation ;
+    owl:inverseOf mg:usesInstrument ;
+    rdfs:label "is used in" ;
+    rdfs:domain inst:Instrument .
+
+# --- Playlist ---
+
+mg:inPlaylist a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "in playlist" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range mg:Playlists ;
+    rdfs:comment "Links a song to a playlist it appears in." .
+
+mg:hasSong a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    owl:inverseOf mg:inPlaylist ;
+    rdfs:label "has song" ;
+    rdfs:domain mg:Playlists ;
+    rdfs:range mg:Songs ;
+    rdfs:comment "Links a playlist to a song it contains." .
+
+# --- Streaming Platform ---
+
+mg:availableOn a owl:ObjectProperty ;
+    rdfs:subPropertyOf mg:hasMusicRelation ;
+    rdfs:label "available on" ;
+    rdfs:range mg:StreamingPlatforms ;
+    rdfs:comment "Links a song, playlist, or album to a streaming platform where it can be found." .
+
+# ========================================================================================
+# TBox: Data Properties
+# ========================================================================================
+
+mg:hasTempo a owl:DatatypeProperty ;
+    rdfs:label "has tempo" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Tempo or BPM of a song (e.g., '95 BPM')." .
+
+mg:hasLanguage a owl:DatatypeProperty ;
+    rdfs:label "has language" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Language of a song's lyrics." .
+
+mg:popularDuring a owl:DatatypeProperty ;
+    rdfs:label "popular during" ;
+    rdfs:domain mg:MusicGenres ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Decade or time period when the genre was most popular (e.g., '1990s')." .
+
+mg:wasReleasedIn a owl:DatatypeProperty ;
+    rdfs:label "was released in" ;
+    rdfs:domain mg:Songs ;
+    rdfs:range xsd:date ;
+    rdfs:comment "Release date of a song." .
+
+mg:hasExternalURL a owl:DatatypeProperty ;
+    rdfs:label "has external URL" ;
+    rdfs:range xsd:anyURI ;
+    rdfs:comment "A URL linking to an external resource (e.g., a Spotify playlist page)." .
+
+# ========================================================================================
+# CBox: SKOS Concept Scheme and Controlled Vocabulary
+# ========================================================================================
+
+mg:MusicGenreTaxonomy a skos:ConceptScheme ;
+    skos:prefLabel "Music Genre Scheme"@en ;
+    rdfs:label "Music Genre Scheme" ;
+    skos:hasTopConcept mg:MusicGenres .
+
+# --- Top Concept: Music Genre ---
+
+mg:MusicGenres a skos:Concept ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:topConceptOf mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Music Genre"@en ;
+    skos:narrower mg:popular-music ;
+    skos:definition "A category of music characterized by shared conventions, styles, or cultural associations."@en .
+
+# --- Popular Music L1 ---
+
+mg:popular-music a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Popular Music"@en ;
+    rdfs:label "Popular Music" ;
+    skos:broader mg:MusicGenres ;
+    skos:narrower mg:reggaeton, mg:rock-music, mg:pop-music, mg:r-and-b, mg:k-pop ;
+    skos:definition "A broad category of music with wide appeal, often commercially distributed and distinct from classical, jazz, or folk traditions."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q373342> ;
+    skos:scopeNote "Not the same as \"pop music\"."@en .
+
+# --- Reggaeton L2 ---
+
+mg:reggaeton a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Reggaeton"@en ;
+    rdfs:label "Reggaeton" ;
+    skos:broader mg:popular-music ;
+    skos:narrower mg:neoperreo, mg:trap, mg:urban ;
+    skos:definition "A music genre that originated in Puerto Rico during the late 1990s, influenced by Latin American, Caribbean, and hip hop music."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q202930> ;
+    skos:scopeNote "Also related to Latin music."@en .
+
+mg:neoperreo a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Neoperreo"@en ;
+    skos:altLabel "Neoperrero"@es ;
+    rdfs:label "Neoperreo" ;
+    skos:broader mg:reggaeton ;
+    skos:definition "An experimental subgenre of reggaeton blending electronic and avant-garde elements."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q96395212> .
+
+mg:trap a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Trap"@en ;
+    rdfs:label "Trap" ;
+    skos:altLabel "Latin trap"@en ;
+    skos:broader mg:reggaeton ;
+    skos:definition "A subgenre of Latin hip-hop music characterized by heavy bass and dark lyrical themes."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q54329757> .
+
+mg:urban a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Urban"@en ;
+    rdfs:label "Urban" ;
+    skos:altLabel "Urbano"@en ;
+    skos:broader mg:reggaeton ;
+    skos:definition "Rhythmic music originating from Latin America, blending reggaeton, hip-hop, and pop influences."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q9048261> .
+
+# --- Rock Music L2 ---
+
+mg:rock-music a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Rock Music"@en ;
+    rdfs:label "Rock Music" ;
+    skos:altLabel "rockmusic"@en ;
+    skos:broader mg:popular-music ;
+    skos:narrower mg:rock-and-roll, mg:classic-rock, mg:hard-rock, mg:pop-rock, mg:punk-rock, mg:alt-rock ;
+    skos:definition "A broad genre of popular music originating in the 1950s, characterized by a strong beat, electric guitars, and often rebellious themes."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q11399> .
+
+mg:rock-and-roll a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Rock & Roll"@en ;
+    rdfs:label "Rock & Roll" ;
+    skos:altLabel "Rock and Roll"@en, "Rock&Roll"@en, "rock and roll"@en ;
+    skos:broader mg:rock-music ;
+    skos:definition "A genre of popular music and an early subgenre of rock music, originating in the United States in the late 1940s and early 1950s."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q7749> ;
+    skos:scopeNote "Not the same as \"Rock Music\"."@en .
+
+mg:classic-rock a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Classic Rock"@en ;
+    rdfs:label "Classic Rock" ;
+    skos:altLabel "classic rock and roll"@en, "classic rock&roll"@en ;
+    skos:broader mg:rock-music ;
+    skos:definition "Classic Rock emerged by blending elements of Blues and R&B into a more widely recognized rock structure, often following a verse–chorus format, though experimental styles like Prog Rock and Acid Rock sometimes broke these conventions entirely. The era was defined by major technological advancements, especially multi-tracking, which allowed artists and producers to layer, edit, and manipulate recordings in new ways—creating richer, more complex sounds that often couldn't be replicated live. This innovation, along with techniques like overdubbing and sound effects, led to highly experimental and sometimes psychedelic music, elevating albums as artistic works. Influential producers such as George Martin, Brian Wilson, and Phil Spector played key roles in shaping this sound. Overall, Classic Rock was highly diverse and fluid, with artists frequently crossing genre boundaries, making strict classification difficult."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q56351111> .
+
+mg:hard-rock a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Hard Rock"@en ;
+    rdfs:label "Hard Rock" ;
+    skos:broader mg:rock-music ;
+    skos:definition "A genre of rock music often characterized by chordal guitar riffs accompanied by root notes on the bass guitar and powerful drums."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q83270> .
+
+mg:pop-rock a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Pop Rock"@en ;
+    rdfs:label "Pop Rock" ;
+    skos:broader mg:rock-music ;
+    skos:definition "A fusion genre combining catchy pop melodies and hooks with the guitar-driven sound of rock music."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q484641> .
+
+mg:punk-rock a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Punk Rock"@en ;
+    rdfs:label "Punk Rock" ;
+    skos:altLabel "Punk"@en, "Punk music"@en ;
+    skos:broader mg:rock-music ;
+    skos:definition "Punk, Post-Punk, and New Wave represent a rapid evolution in rock, beginning with Punk's raw, minimalist rebellion against the overproduced, commercialized rock of the early 1970s. Punk emphasized simplicity, DIY culture, and accessibility—anyone could make music—bringing it back to youth with fast tempos, basic chords, and anti-establishment energy, often aligned with movements like Reggae. Over time, this evolved into Post-Punk and New Wave, which embraced more complex structures, technology, and artistic concepts, including strong visual identities and themes focused on societal critique rather than personal expression. Punk splintered into many subgenres and ultimately branched into Hardcore Punk and Post-Punk/Wave, with New Wave and Synthpop moving toward mainstream appeal while pushing darker, more experimental forms like Gothic and Industrial underground."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q3071> .
+
+mg:alt-rock a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Alt Rock"@en ;
+    rdfs:label "Alt Rock" ;
+    skos:altLabel "alternative"@en, "alternative music"@en, "Alternative Rock"@en ;
+    skos:broader mg:rock-music ;
+    skos:definition "Alternative Rock rose to dominate the 1990s, though the term itself is broad, covering diverse rock styles from the mid-1980s onward. It is characterized by distorted, layered guitar sounds, slower tempos, and often dark or emotional lyrics, creating a heavier \"wall of sound\" compared to earlier punk. Closely tied to Indie Rock—named after independent record labels—the genre reflected a commitment to artistic integrity and anti-mainstream values, though distinctions between the terms blurred over time. Its popularity stemmed from its ability to resonate with the emotional struggles and rebellious attitudes of youth, while also supporting emerging artists and increasing opportunities for women in rock. Though less dominant today, Alternative/Indie Rock continues as a flexible label for diverse, non-mainstream rock styles."@en ;
+    skos:exactMatch <http://www.musicmap.info/> .
+
+# --- Pop Music L1 ---
+
+mg:pop-music a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Pop Music"@en ;
+    rdfs:label "Pop Music" ;
+    skos:altLabel "popmusic"@en ;
+    skos:broader mg:popular-music ;
+    skos:narrower mg:latin-pop, mg:baroque-pop ;
+    skos:definition "A genre of popular music characterized by catchy melodies, simple structures, and broad commercial appeal."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q37073> .
+
+mg:latin-pop a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Latin Pop"@en ;
+    rdfs:label "Latin Pop" ;
+    skos:altLabel "latinpop"@en, "Latin popular music"@en ;
+    skos:broader mg:pop-music ;
+    skos:definition "A pop music subgenre blending Latin American musical styles with American pop sensibilities."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q547137> .
+
+mg:baroque-pop a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "Baroque Pop"@en ;
+    rdfs:label "Baroque Pop" ;
+    skos:altLabel "baroquepop"@en ;
+    skos:broader mg:pop-music ;
+    skos:definition "A fusion genre that combines rock music with particular elements of classical music, especially Baroque-era orchestration."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q46046> .
+
+# --- R&B L2 ---
+
+mg:r-and-b a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "R&B"@en ;
+    rdfs:label "R&B" ;
+    skos:altLabel "R'n'B"@en, "RnB"@en, "R and B"@en, "R & B"@en, "rhythm & blues"@en, "rhythm and blues"@en ;
+    skos:broader mg:popular-music ;
+    skos:definition "A genre of popular music that originated within African-American communities in the 1940s, combining jazz, gospel, and blues influences."@en ;
+    skos:exactMatch <http://www.wikidata.org/wiki/Q45981> ;
+    skos:scopeNote "Using \"R&B\" because it's most common on streaming platforms like Spotify, and feels more modern than spelling out the words."@en .
+
+# --- K-Pop L2 ---
+
+mg:k-pop a skos:Concept, mg:MusicGenres ;
+    skos:inScheme mg:MusicGenreTaxonomy ;
+    skos:prefLabel "K-Pop"@en ;
+    rdfs:label "K-Pop" ;
+    skos:altLabel "Korean pop"@en, "Kpop"@en, "K pop"@en, "Korean popular music"@en ;
+    skos:broader mg:popular-music ;
+    skos:definition "A genre of popular music originating in South Korea, characterized by a blend of Western musical styles with Korean performance and visual elements. K-pop is extremely fashion- and image-oriented, with boyband/girlband formats dominating. With the advent of music streaming and social media, K-pop became massively popular and Korea's biggest cultural export."@en ;
+    skos:exactMatch <http://www.musicmap.info/> ;
+    skos:scopeNote "Using K-Pop with hyphen since that seems like the common formatting."@en .
+
+# ========================================================================================
+# ABox: Instance Data
+# ========================================================================================
+
+# --- Genre characteristics (ABox instances of TBox genre classes) ---
+
+sng:Reggaeton a mg:reggaeton, mg:MusicGenres ;
+    rdfs:label "Reggaeton" ;
+    mg:hasOrigin geo:puerto-rico ;
+    mg:isPopularIn geo:puerto-rico ;
+    mg:popularDuring "2000s, 2010s, 2020s" .
+
+sng:KPop a mg:k-pop, mg:MusicGenres ;
+    rdfs:label "K-Pop" ;
+    mg:hasOrigin geo:south-korea ;
+    mg:isPopularIn geo:south-korea ;
+    mg:popularDuring "2010s, 2020s" .
+
+sng:RockMusic a mg:rock-music, mg:MusicGenres ;
+    rdfs:label "Rock Music" ;
+    mg:popularDuring "1960s, 1970s, 1980s, 1990s" .
+
+# --- Songs ---
+
+sng:Gasolina a mg:Songs, mg:reggaeton ;
+    rdfs:label "Gasolina" ;
+    skos:prefLabel "Gasolina"@en ;
+    mg:hasGenre mg:reggaeton ;
+    mg:hasArtist mkr:daddy-yankee ;
+    mg:usesInstrument inst:drums, inst:dembow-beat, inst:synthesizer ;
+    mg:hasLanguage "Spanish" ;
+    mg:wasReleasedIn "2004-10-26"^^xsd:date .
+
+sng:Dakiti a mg:Songs, mg:reggaeton, mg:pop-music ;
+    rdfs:label "Dakiti" ;
+    skos:prefLabel "Dakiti"@en ;
+    mg:hasGenre mg:reggaeton, mg:pop-music ;
+    mg:hasArtist mkr:bad-bunny ;
+    mg:usesInstrument inst:drums, inst:dembow-beat, inst:synthesizer ;
+    mg:hasLanguage "Spanish" ;
+    mg:wasReleasedIn "2020-10-30"^^xsd:date .
+
+sng:DakitiRemix a mg:Songs, mg:reggaeton ;
+    rdfs:label "Dakiti (Remix)" ;
+    skos:prefLabel "Dakiti (Remix)"@en ;
+    mg:hasGenre mg:reggaeton ;
+    mg:hasArtist mkr:bad-bunny ;
+    mg:isRemixOf sng:Dakiti .
+
+sng:BohemianRhapsody a mg:Songs, mg:classic-rock ;
+    rdfs:label "Bohemian Rhapsody" ;
+    skos:prefLabel "Bohemian Rhapsody"@en ;
+    mg:hasGenre mg:classic-rock ;
+    mg:hasArtist mkr:queen ;
+    mg:usesInstrument inst:electric-guitar, inst:drums ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "1975-10-31"^^xsd:date .
+
+sng:SmellsLikeTeenSpirit a mg:Songs, mg:alt-rock ;
+    rdfs:label "Smells Like Teen Spirit" ;
+    skos:prefLabel "Smells Like Teen Spirit"@en ;
+    mg:hasGenre mg:alt-rock ;
+    mg:hasArtist mkr:nirvana ;
+    mg:usesInstrument inst:electric-guitar, inst:drums ;
+    mg:wasReleasedIn "1991-09-10"^^xsd:date .
+
+sng:LondonCalling a mg:Songs, mg:punk-rock ;
+    rdfs:label "London Calling" ;
+    skos:prefLabel "London Calling"@en ;
+    mg:hasGenre mg:punk-rock ;
+    mg:hasArtist mkr:the-clash ;
+    mg:usesInstrument inst:electric-guitar, inst:drums ;
+    mg:wasReleasedIn "1979-12-07"^^xsd:date .
+
+sng:Dynamite a mg:Songs, mg:k-pop ;
+    rdfs:label "Dynamite" ;
+    skos:prefLabel "Dynamite"@en ;
+    mg:hasGenre mg:k-pop ;
+    mg:hasArtist mkr:bts ;
+    mg:usesInstrument inst:synthesizer, inst:drums ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "2020-08-21"^^xsd:date .
+
+sng:Butter a mg:Songs, mg:k-pop ;
+    rdfs:label "Butter" ;
+    skos:prefLabel "Butter"@en ;
+    mg:hasGenre mg:k-pop ;
+    mg:hasArtist mkr:bts ;
+    mg:usesInstrument inst:synthesizer, inst:drums ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "2021-05-21"^^xsd:date .
+
+sng:HowYouLikeThat a mg:Songs, mg:k-pop ;
+    rdfs:label "How You Like That" ;
+    skos:prefLabel "How You Like That"@en ;
+    mg:hasGenre mg:k-pop ;
+    mg:hasArtist mkr:blackpink ;
+    mg:usesInstrument inst:synthesizer, inst:drums ;
+    mg:hasLanguage "Korean" ;
+    mg:wasReleasedIn "2020-06-26"^^xsd:date .
+
+sng:KillThisLove a mg:Songs, mg:k-pop ;
+    rdfs:label "Kill This Love" ;
+    skos:prefLabel "Kill This Love"@en ;
+    mg:hasGenre mg:k-pop ;
+    mg:hasArtist mkr:blackpink ;
+    mg:usesInstrument inst:synthesizer, inst:drums ;
+    mg:hasLanguage "Korean" ;
+    mg:wasReleasedIn "2019-04-05"^^xsd:date .
+
+sng:Super a mg:Songs, mg:k-pop ;
+    rdfs:label "Super" ;
+    skos:prefLabel "Super"@en ;
+    mg:hasGenre mg:k-pop ;
+    mg:hasArtist mkr:seventeen ;
+    mg:usesInstrument inst:synthesizer, inst:drums ;
+    mg:hasLanguage "Korean" ;
+    mg:wasReleasedIn "2023-04-17"^^xsd:date .
+
+sng:LoveDive a mg:Songs, mg:k-pop ;
+    rdfs:label "LOVE DIVE" ;
+    skos:prefLabel "LOVE DIVE"@en ;
+    mg:hasGenre mg:k-pop ;
+    mg:hasArtist mkr:ive ;
+    mg:usesInstrument inst:synthesizer, inst:drums ;
+    mg:hasLanguage "Korean" ;
+    mg:wasReleasedIn "2022-04-05"^^xsd:date .
+
+sng:GangnamStyle a mg:Songs, mg:k-pop ;
+    rdfs:label "Gangnam Style" ;
+    skos:prefLabel "Gangnam Style"@en ;
+    mg:hasGenre mg:k-pop ;
+    mg:hasArtist mkr:psy ;
+    mg:usesInstrument inst:synthesizer, inst:drums ;
+    mg:hasLanguage "Korean" ;
+    mg:wasReleasedIn "2012-07-15"^^xsd:date .
+
+# --- Pop Songs ---
+
+sng:Thriller a mg:Songs, mg:pop-music ;
+    rdfs:label "Thriller" ;
+    skos:prefLabel "Thriller"@en ;
+    mg:hasGenre mg:pop-music ;
+    mg:hasArtist mkr:michael-jackson ;
+    mg:usesInstrument inst:synthesizer, inst:drums ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "1982-11-30"^^xsd:date .
+
+sng:LikeAPrayer a mg:Songs, mg:pop-music ;
+    rdfs:label "Like a Prayer" ;
+    skos:prefLabel "Like a Prayer"@en ;
+    mg:hasGenre mg:pop-music ;
+    mg:hasArtist mkr:madonna ;
+    mg:usesInstrument inst:synthesizer, inst:drums, inst:electric-guitar ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "1989-03-03"^^xsd:date .
+
+sng:LivinLaVidaLoca a mg:Songs, mg:latin-pop ;
+    rdfs:label "Livin' la Vida Loca" ;
+    skos:prefLabel "Livin' la Vida Loca"@en ;
+    mg:hasGenre mg:latin-pop ;
+    mg:hasArtist mkr:ricky-martin ;
+    mg:usesInstrument inst:drums, inst:electric-guitar, inst:synthesizer ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "1999-03-23"^^xsd:date .
+
+sng:GodOnlyKnows a mg:Songs, mg:baroque-pop ;
+    rdfs:label "God Only Knows" ;
+    skos:prefLabel "God Only Knows"@en ;
+    mg:hasGenre mg:baroque-pop ;
+    mg:hasArtist mkr:the-beach-boys ;
+    mg:usesInstrument inst:piano, inst:french-horn ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "1966-05-16"^^xsd:date .
+
+# --- Rock Songs ---
+
+sng:JohnnyBGoode a mg:Songs, mg:rock-and-roll ;
+    rdfs:label "Johnny B. Goode" ;
+    skos:prefLabel "Johnny B. Goode"@en ;
+    mg:hasGenre mg:rock-and-roll ;
+    mg:hasArtist mkr:chuck-berry ;
+    mg:usesInstrument inst:electric-guitar, inst:drums ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "1958-03-31"^^xsd:date .
+
+sng:SmokeOnTheWater a mg:Songs, mg:hard-rock ;
+    rdfs:label "Smoke on the Water" ;
+    skos:prefLabel "Smoke on the Water"@en ;
+    mg:hasGenre mg:hard-rock ;
+    mg:hasArtist mkr:deep-purple ;
+    mg:usesInstrument inst:electric-guitar, inst:drums ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "1972-03-25"^^xsd:date .
+
+sng:LivinOnAPrayer a mg:Songs, mg:pop-rock ;
+    rdfs:label "Livin' on a Prayer" ;
+    skos:prefLabel "Livin' on a Prayer"@en ;
+    mg:hasGenre mg:pop-rock ;
+    mg:hasArtist mkr:bon-jovi ;
+    mg:usesInstrument inst:electric-guitar, inst:synthesizer, inst:drums ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "1986-10-31"^^xsd:date .
+
+sng:DontStopBelievin a mg:Songs, mg:pop-rock ;
+    rdfs:label "Don't Stop Believin'" ;
+    skos:prefLabel "Don't Stop Believin'"@en ;
+    mg:hasGenre mg:pop-rock ;
+    mg:hasArtist mkr:journey ;
+    mg:usesInstrument inst:piano, inst:electric-guitar, inst:drums ;
+    mg:hasLanguage "English" ;
+    mg:wasReleasedIn "1981-10-01"^^xsd:date .
+
+# --- Streaming Platforms ---
+
+sng:Spotify a mg:StreamingPlatforms ;
+    rdfs:label "Spotify" ;
+    skos:prefLabel "Spotify"@en ;
+    mg:hasExternalURL "https://open.spotify.com"^^xsd:anyURI .
+
+# --- Playlists ---
+
+sng:ReggaetonHits a mg:Playlists ;
+    rdfs:label "Reggaeton Hits" ;
+    skos:prefLabel "Reggaeton Hits"@en ;
+    mg:hasSong sng:Gasolina, sng:Dakiti .
+
+sng:BailaReggaeton a mg:Playlists ;
+    rdfs:label "Baila Reggaeton" ;
+    skos:prefLabel "Baila Reggaeton"@en ;
+    mg:availableOn sng:Spotify ;
+    mg:hasExternalURL "https://open.spotify.com/playlist/37i9dQZF1DWY7IeIP1cdjF"^^xsd:anyURI ;
+    mg:hasGenre mg:reggaeton ;
+    rdfs:comment "Spotify editorial playlist featuring current reggaeton hits." .
+
+sng:ThisIsBadBunny a mg:Playlists ;
+    rdfs:label "This Is Bad Bunny" ;
+    skos:prefLabel "This Is Bad Bunny"@en ;
+    mg:availableOn sng:Spotify ;
+    mg:hasExternalURL "https://open.spotify.com/playlist/37i9dQZF1DX2apWzyECwyZ"^^xsd:anyURI ;
+    mg:hasGenre mg:reggaeton ;
+    mg:hasSong sng:Dakiti ;
+    rdfs:comment "Spotify artist playlist — Benito's greatest hits, los mejores hits del conejo." .
