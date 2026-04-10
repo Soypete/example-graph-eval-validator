@@ -636,7 +636,7 @@ sng:RockMusic a mg:rock-music, mg:MusicGenres ;
 sng:Gasolina a mg:Songs, mg:reggaeton ;
     rdfs:label "Gasolina" ;
     skos:prefLabel "Gasolina"@en ;
-    mg:hasGenre mg:reggaeton ;
+    mg:hasGenre mg:reggaeton, mg:popular-music ;
     mg:hasArtist mkr:daddy-yankee ;
     mg:usesInstrument inst:drums, inst:dembow-beat, inst:synthesizer ;
     mg:hasLanguage "Spanish" ;
@@ -645,7 +645,7 @@ sng:Gasolina a mg:Songs, mg:reggaeton ;
 sng:Dakiti a mg:Songs, mg:reggaeton, mg:pop-music ;
     rdfs:label "Dakiti" ;
     skos:prefLabel "Dakiti"@en ;
-    mg:hasGenre mg:reggaeton, mg:pop-music ;
+    mg:hasGenre mg:reggaeton, mg:pop-music, mg:popular-music ;
     mg:hasArtist mkr:bad-bunny ;
     mg:usesInstrument inst:drums, inst:dembow-beat, inst:synthesizer ;
     mg:hasLanguage "Spanish" ;
@@ -654,14 +654,14 @@ sng:Dakiti a mg:Songs, mg:reggaeton, mg:pop-music ;
 sng:DakitiRemix a mg:Songs, mg:reggaeton ;
     rdfs:label "Dakiti (Remix)" ;
     skos:prefLabel "Dakiti (Remix)"@en ;
-    mg:hasGenre mg:reggaeton ;
+    mg:hasGenre mg:reggaeton, mg:popular-music ;
     mg:hasArtist mkr:bad-bunny ;
     mg:isRemixOf sng:Dakiti .
 
 sng:BohemianRhapsody a mg:Songs, mg:classic-rock ;
     rdfs:label "Bohemian Rhapsody" ;
     skos:prefLabel "Bohemian Rhapsody"@en ;
-    mg:hasGenre mg:classic-rock ;
+    mg:hasGenre mg:classic-rock, mg:rock-music, mg:popular-music ;
     mg:hasArtist mkr:queen ;
     mg:usesInstrument inst:electric-guitar, inst:drums ;
     mg:hasLanguage "English" ;
@@ -670,7 +670,7 @@ sng:BohemianRhapsody a mg:Songs, mg:classic-rock ;
 sng:SmellsLikeTeenSpirit a mg:Songs, mg:alt-rock ;
     rdfs:label "Smells Like Teen Spirit" ;
     skos:prefLabel "Smells Like Teen Spirit"@en ;
-    mg:hasGenre mg:alt-rock ;
+    mg:hasGenre mg:alt-rock, mg:rock-music, mg:popular-music ;
     mg:hasArtist mkr:nirvana ;
     mg:usesInstrument inst:electric-guitar, inst:drums ;
     mg:wasReleasedIn "1991-09-10"^^xsd:date .
@@ -678,7 +678,7 @@ sng:SmellsLikeTeenSpirit a mg:Songs, mg:alt-rock ;
 sng:LondonCalling a mg:Songs, mg:punk-rock ;
     rdfs:label "London Calling" ;
     skos:prefLabel "London Calling"@en ;
-    mg:hasGenre mg:punk-rock ;
+    mg:hasGenre mg:punk-rock, mg:rock-music, mg:popular-music ;
     mg:hasArtist mkr:the-clash ;
     mg:usesInstrument inst:electric-guitar, inst:drums ;
     mg:wasReleasedIn "1979-12-07"^^xsd:date .
@@ -686,7 +686,7 @@ sng:LondonCalling a mg:Songs, mg:punk-rock ;
 sng:Dynamite a mg:Songs, mg:k-pop ;
     rdfs:label "Dynamite" ;
     skos:prefLabel "Dynamite"@en ;
-    mg:hasGenre mg:k-pop ;
+    mg:hasGenre mg:k-pop, mg:popular-music ;
     mg:hasArtist mkr:bts ;
     mg:usesInstrument inst:synthesizer, inst:drums ;
     mg:hasLanguage "English" ;
@@ -695,7 +695,7 @@ sng:Dynamite a mg:Songs, mg:k-pop ;
 sng:Butter a mg:Songs, mg:k-pop ;
     rdfs:label "Butter" ;
     skos:prefLabel "Butter"@en ;
-    mg:hasGenre mg:k-pop ;
+    mg:hasGenre mg:k-pop, mg:popular-music ;
     mg:hasArtist mkr:bts ;
     mg:usesInstrument inst:synthesizer, inst:drums ;
     mg:hasLanguage "English" ;
@@ -704,7 +704,7 @@ sng:Butter a mg:Songs, mg:k-pop ;
 sng:HowYouLikeThat a mg:Songs, mg:k-pop ;
     rdfs:label "How You Like That" ;
     skos:prefLabel "How You Like That"@en ;
-    mg:hasGenre mg:k-pop ;
+    mg:hasGenre mg:k-pop, mg:popular-music ;
     mg:hasArtist mkr:blackpink ;
     mg:usesInstrument inst:synthesizer, inst:drums ;
     mg:hasLanguage "Korean" ;
@@ -713,7 +713,7 @@ sng:HowYouLikeThat a mg:Songs, mg:k-pop ;
 sng:KillThisLove a mg:Songs, mg:k-pop ;
     rdfs:label "Kill This Love" ;
     skos:prefLabel "Kill This Love"@en ;
-    mg:hasGenre mg:k-pop ;
+    mg:hasGenre mg:k-pop, mg:popular-music ;
     mg:hasArtist mkr:blackpink ;
     mg:usesInstrument inst:synthesizer, inst:drums ;
     mg:hasLanguage "Korean" ;
@@ -722,7 +722,7 @@ sng:KillThisLove a mg:Songs, mg:k-pop ;
 sng:Super a mg:Songs, mg:k-pop ;
     rdfs:label "Super" ;
     skos:prefLabel "Super"@en ;
-    mg:hasGenre mg:k-pop ;
+    mg:hasGenre mg:k-pop, mg:popular-music ;
     mg:hasArtist mkr:seventeen ;
     mg:usesInstrument inst:synthesizer, inst:drums ;
     mg:hasLanguage "Korean" ;
@@ -731,7 +731,7 @@ sng:Super a mg:Songs, mg:k-pop ;
 sng:LoveDive a mg:Songs, mg:k-pop ;
     rdfs:label "LOVE DIVE" ;
     skos:prefLabel "LOVE DIVE"@en ;
-    mg:hasGenre mg:k-pop ;
+    mg:hasGenre mg:k-pop, mg:popular-music ;
     mg:hasArtist mkr:ive ;
     mg:usesInstrument inst:synthesizer, inst:drums ;
     mg:hasLanguage "Korean" ;
@@ -740,7 +740,7 @@ sng:LoveDive a mg:Songs, mg:k-pop ;
 sng:GangnamStyle a mg:Songs, mg:k-pop ;
     rdfs:label "Gangnam Style" ;
     skos:prefLabel "Gangnam Style"@en ;
-    mg:hasGenre mg:k-pop ;
+    mg:hasGenre mg:k-pop, mg:popular-music ;
     mg:hasArtist mkr:psy ;
     mg:usesInstrument inst:synthesizer, inst:drums ;
     mg:hasLanguage "Korean" ;
@@ -751,7 +751,7 @@ sng:GangnamStyle a mg:Songs, mg:k-pop ;
 sng:Thriller a mg:Songs, mg:pop-music ;
     rdfs:label "Thriller" ;
     skos:prefLabel "Thriller"@en ;
-    mg:hasGenre mg:pop-music ;
+    mg:hasGenre mg:pop-music, mg:popular-music ;
     mg:hasArtist mkr:michael-jackson ;
     mg:usesInstrument inst:synthesizer, inst:drums ;
     mg:hasLanguage "English" ;
@@ -760,7 +760,7 @@ sng:Thriller a mg:Songs, mg:pop-music ;
 sng:LikeAPrayer a mg:Songs, mg:pop-music ;
     rdfs:label "Like a Prayer" ;
     skos:prefLabel "Like a Prayer"@en ;
-    mg:hasGenre mg:pop-music ;
+    mg:hasGenre mg:pop-music, mg:popular-music ;
     mg:hasArtist mkr:madonna ;
     mg:usesInstrument inst:synthesizer, inst:drums, inst:electric-guitar ;
     mg:hasLanguage "English" ;
@@ -769,7 +769,7 @@ sng:LikeAPrayer a mg:Songs, mg:pop-music ;
 sng:LivinLaVidaLoca a mg:Songs, mg:latin-pop ;
     rdfs:label "Livin' la Vida Loca" ;
     skos:prefLabel "Livin' la Vida Loca"@en ;
-    mg:hasGenre mg:latin-pop ;
+    mg:hasGenre mg:latin-pop, mg:pop-music, mg:popular-music ;
     mg:hasArtist mkr:ricky-martin ;
     mg:usesInstrument inst:drums, inst:electric-guitar, inst:synthesizer ;
     mg:hasLanguage "English" ;
@@ -778,7 +778,7 @@ sng:LivinLaVidaLoca a mg:Songs, mg:latin-pop ;
 sng:GodOnlyKnows a mg:Songs, mg:baroque-pop ;
     rdfs:label "God Only Knows" ;
     skos:prefLabel "God Only Knows"@en ;
-    mg:hasGenre mg:baroque-pop ;
+    mg:hasGenre mg:baroque-pop, mg:pop-music, mg:popular-music ;
     mg:hasArtist mkr:the-beach-boys ;
     mg:usesInstrument inst:piano, inst:french-horn ;
     mg:hasLanguage "English" ;
@@ -789,7 +789,7 @@ sng:GodOnlyKnows a mg:Songs, mg:baroque-pop ;
 sng:JohnnyBGoode a mg:Songs, mg:rock-and-roll ;
     rdfs:label "Johnny B. Goode" ;
     skos:prefLabel "Johnny B. Goode"@en ;
-    mg:hasGenre mg:rock-and-roll ;
+    mg:hasGenre mg:rock-and-roll, mg:rock-music, mg:popular-music ;
     mg:hasArtist mkr:chuck-berry ;
     mg:usesInstrument inst:electric-guitar, inst:drums ;
     mg:hasLanguage "English" ;
@@ -798,7 +798,7 @@ sng:JohnnyBGoode a mg:Songs, mg:rock-and-roll ;
 sng:SmokeOnTheWater a mg:Songs, mg:hard-rock ;
     rdfs:label "Smoke on the Water" ;
     skos:prefLabel "Smoke on the Water"@en ;
-    mg:hasGenre mg:hard-rock ;
+    mg:hasGenre mg:hard-rock, mg:rock-music, mg:popular-music ;
     mg:hasArtist mkr:deep-purple ;
     mg:usesInstrument inst:electric-guitar, inst:drums ;
     mg:hasLanguage "English" ;
@@ -807,7 +807,7 @@ sng:SmokeOnTheWater a mg:Songs, mg:hard-rock ;
 sng:LivinOnAPrayer a mg:Songs, mg:pop-rock ;
     rdfs:label "Livin' on a Prayer" ;
     skos:prefLabel "Livin' on a Prayer"@en ;
-    mg:hasGenre mg:pop-rock ;
+    mg:hasGenre mg:pop-rock, mg:rock-music, mg:popular-music ;
     mg:hasArtist mkr:bon-jovi ;
     mg:usesInstrument inst:electric-guitar, inst:synthesizer, inst:drums ;
     mg:hasLanguage "English" ;
@@ -816,11 +816,41 @@ sng:LivinOnAPrayer a mg:Songs, mg:pop-rock ;
 sng:DontStopBelievin a mg:Songs, mg:pop-rock ;
     rdfs:label "Don't Stop Believin'" ;
     skos:prefLabel "Don't Stop Believin'"@en ;
-    mg:hasGenre mg:pop-rock ;
+    mg:hasGenre mg:pop-rock, mg:rock-music, mg:popular-music ;
     mg:hasArtist mkr:journey ;
     mg:usesInstrument inst:piano, inst:electric-guitar, inst:drums ;
     mg:hasLanguage "English" ;
     mg:wasReleasedIn "1981-10-01"^^xsd:date .
+
+# --- Instruments (labels for inst: references) ---
+
+inst:drums rdfs:label "Drums" .
+inst:dembow-beat rdfs:label "Dembow Beat" .
+inst:synthesizer rdfs:label "Synthesizer" .
+inst:electric-guitar rdfs:label "Electric Guitar" .
+inst:piano rdfs:label "Piano" .
+inst:french-horn rdfs:label "French Horn" .
+
+# --- Artists (labels for mkr: references) ---
+
+mkr:daddy-yankee rdfs:label "Daddy Yankee" .
+mkr:bad-bunny rdfs:label "Bad Bunny" .
+mkr:queen rdfs:label "Queen" .
+mkr:nirvana rdfs:label "Nirvana" .
+mkr:the-clash rdfs:label "The Clash" .
+mkr:bts rdfs:label "BTS" .
+mkr:blackpink rdfs:label "BLACKPINK" .
+mkr:seventeen rdfs:label "SEVENTEEN" .
+mkr:ive rdfs:label "IVE" .
+mkr:psy rdfs:label "PSY" .
+mkr:michael-jackson rdfs:label "Michael Jackson" .
+mkr:madonna rdfs:label "Madonna" .
+mkr:ricky-martin rdfs:label "Ricky Martin" .
+mkr:the-beach-boys rdfs:label "The Beach Boys" .
+mkr:chuck-berry rdfs:label "Chuck Berry" .
+mkr:deep-purple rdfs:label "Deep Purple" .
+mkr:bon-jovi rdfs:label "Bon Jovi" .
+mkr:journey rdfs:label "Journey" .
 
 # --- Streaming Platforms ---
 
