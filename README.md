@@ -1,6 +1,17 @@
 # Example Graph Eval Validator
 
-An example of testing whether an LLM can use tool calling to query an RDF knowledge graph via SPARQL. Built as a companion to [Unit Testing Your Agents](https://open.substack.com/pub/soypetetech/p/unit-testing-your-agents?utm_campaign=post-expanded-share&utm_medium=web).
+## What This Is
+
+When you build a knowledge graph, a natural question is: **can an AI agent actually use it?** Ontology design involves defining competency questions -- the questions your graph should be able to answer. But validating that an agent can retrieve those answers through tool calling is a separate problem.
+
+This project tests exactly that. We take a music genre ontology, give an LLM a SPARQL tool, and evaluate whether it can answer 9 competency questions by querying the graph. The eval measures the full pipeline: Does the agent call the tool? Does it write valid SPARQL? Does the query return data? Does the final answer make sense?
+
+This is useful for:
+- **Ontology developers** who want to validate their graph is queryable by AI agents
+- **Agent builders** who want to measure tool-calling reliability against structured data
+- **Anyone evaluating** whether a locally-hosted model can do native function calling against a knowledge graph
+
+Built as a companion to [Unit Testing Your Agents](https://open.substack.com/pub/soypetetech/p/unit-testing-your-agents?utm_campaign=post-expanded-share&utm_medium=web).
 
 ## Setup
 
